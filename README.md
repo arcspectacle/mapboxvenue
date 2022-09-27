@@ -1,2 +1,100 @@
-# mapboxvenue
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Display a map on a webpage</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.10.0/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.10.0/mapbox-gl.js"></script>
+<style>
+body margin: 0; padding: 0;
+#map position: absolute; top: 0; bottom: 0; width: 100%;
+</style>
+<div id="map"></div>
+<script>
+	//  mapboxgl.accessToken =
+  //       "pk.eyJ1IjoicmVnZW50c2V2ZW5zZWFzY3J1aXNlcyIsImEiOiJjanE3MDc3cmoybDQyNDVzemZqcjhxNnN2In0.e3Q0yH2ceVmTqiR0Rhk6zA";
 
+    mapboxgl.accessToken ="pk.eyJ1IjoiYXJjc3BlY3RhY2xlIiwiYSI6ImNsNnFmMGxndDB1NngzaW82djA0dTBxZG0ifQ.AA549N6ub4fCHY9EhD-8hg"
+
+      var map = new mapboxgl.Map(
+        style: "mapbox://styles/arcspectacle/cl87xr0zy000214odrfcw3hlp",
+         center: [-72.13936328552978, 38.197814204034984],
+        zoom: 3.7306199153655384,
+        // pitch: 0,
+        // bearing: 0,
+        container: "map",
+      );
+
+      map.on("load", () ={
+        //data names:
+        //venues-noincome-darkgray1
+        //venues-0k-20k-lightredberry1
+        //venues-21k-40k-lightred1
+        //venues-41k-60k-lightorange1
+        //venues-61k-80k-lightyellow1
+        //venues-81k-100k-lightgreen1
+        //venues-101k-120k-lightcyan1
+        //venues-121kandabove-lightcornf
+
+// Create a popup
+const popup = new mapboxgl.Popup(
+  closeButton: false, 
+  closeOnClick: false);
+
+//add the sources that are present and loaded on your style
+let dataSources = ['venues-noincome-darkgray1','venues-0k-20k-lightredberry1', 'venues-21k-40k-lightred1', 'venues-41k-60k-lightorange1', 'venues-61k-80k-lightyellow1', 'venues-81k-100k-lightgreen1', 'venues-101k-120k-lightcyan1', 'venues-121kandabove-lightcornf']
+ 
+map.on('mouseenter', dataSources, (e) = {
+// Change the cursor style as a UI indicator.
+map.getCanvas().style.cursor = 'pointer'}
+
+//observe your data's information in the console. Delete when not using
+ console.log(e.features[0].properties)
+// Copy coordinates array.
+const coordinates = e.features[0].geometry.coordinates.slice();
+
+const address = e.features[0].properties.address
+const capacity = e.features[0].properties.capacity
+const email = e.features[0].properties.email
+const medianIncome = e.features[0].properties['median income']
+const parking = e.features[0].properties.parking
+const state = e.features[0].properties.state
+const venue = e.features[0].properties.venue
+const website = e.features[0].properties.website
+const zipcode = e.features[0].properties.zipcode
+
+
+   // console.log(attrs)
+    popup.setLngLat(coordinates).setHTML(
+       "Address: "+ address + "<br>" +
+        "Capacity: " + capacity + "<br>" +
+        "Email: " + email + "<br>" +
+        "Median Income: " + capacity + "<br>" +
+        "Parking: " + parking + "<br>" +
+        "State: " + state + "<br>" +
+        "Venue: " + venue + "<br>" +
+        "Website: " + website + "<br>" +
+        "Zipcode: " + zipcode + "<br>" 
+    ).addTo(map);
+
++
+// Ensure that if the map is zoomed out such that multiple
+// copies of the feature are visible, the popup appears
+// over the copy being pointed to.
+while (Math.abs(e.lngLat.lng - coordinates[0]) 180) {coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360}
+ 
+// Populate the popup and set its coordinates
+// based on the feature found.
+ 
+map.on('mouseleave', dataSources, () => {
+map.getCanvas().style.cursor = '';}
+popup.remove(););
+    
+
+	})
+</script>
+
+</body>
+</html>
+</br></br></br></br></br></br></script></link></meta></meta></head></br>
